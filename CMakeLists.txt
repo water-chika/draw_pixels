@@ -11,4 +11,4 @@ add_executable(draw_pixels_test
 
 set_target_properties(draw_pixels_test PROPERTIES CXX_STANDARD 23)
 target_link_libraries(draw_pixels_test PUBLIC draw_pixels)
-target_include_directories(draw_pixels PUBLIC ${CMAKE_SOURCE_DIR})
+target_include_directories(draw_pixels PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
