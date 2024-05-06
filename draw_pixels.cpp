@@ -70,8 +70,13 @@ void water::draw_pixels(uint32_t width, uint32_t height, uint32_t* data)
 	window_class.lpfnWndProc = window_process;
 	RegisterClass(&window_class);
 	draw_pixels_data draw_data{ width, height, data };
-	HWND hwnd = CreateWindowA(window_class_name, "draw_pixels", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
-		width, height, NULL, NULL, GetModuleHandle(NULL), &draw_data);
+	RECT rect{0, 0,width, height};
+	auto window_style = WS_OVERLAPPEDWINDOW;
+	assert(window_style != WS_OVERLAPPED);
+	BOOL adjust_res = AdjustWindowRect(&rect, window_style, FALSE);
+	assert(adjust_res);
+	HWND hwnd = CreateWindowA(window_class_name, "draw_pixels", window_style, CW_USEDEFAULT, CW_USEDEFAULT,
+		rect.right - rect.left, rect.bottom - rect.top, NULL, NULL, GetModuleHandle(NULL), &draw_data);
 	assert(hwnd);
 	ShowWindow(hwnd, SW_NORMAL);
 
